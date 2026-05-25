@@ -3,6 +3,23 @@
 > Active-passive disaster recovery across two AWS regions. **RPO 5 min · RTO 15 min.**
 > Repo: [github.com/bukx/multi-region-dr](https://github.com/bukx/multi-region-dr)
 
+## Runnable MVP
+
+This repo now includes a local failover simulator that models:
+
+- primary and secondary regional health
+- Route 53-style traffic switching
+- DynamoDB and S3 replication lag snapshots
+- DR drills and recovery actions from a CLI
+
+### Run locally
+
+```bash
+python3 -m unittest discover -s tests -v
+PYTHONPATH=src python3 -m multi_region_dr.cli --config config/example.json status
+PYTHONPATH=src python3 -m multi_region_dr.cli --config config/example.json failover --reason "regional outage"
+```
+
 ![Architecture](./architecture.png)
 
 ## Mermaid view
