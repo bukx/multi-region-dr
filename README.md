@@ -12,6 +12,15 @@ This repo now includes a local failover simulator that models:
 - DynamoDB and S3 replication lag snapshots
 - DR drills and recovery actions from a CLI
 
+## Deployable infrastructure
+
+The repo now also includes Terraform for the actual AWS backbone:
+
+- primary and secondary S3 buckets with versioning, encryption, and replication
+- DynamoDB Global Table for cross-region order replication
+- Route 53 health checks and failover DNS records
+- IAM role and policy for S3 replication
+
 ### Run locally
 
 ```bash
@@ -19,6 +28,22 @@ python3 -m unittest discover -s tests -v
 PYTHONPATH=src python3 -m multi_region_dr.cli --config config/example.json status
 PYTHONPATH=src python3 -m multi_region_dr.cli --config config/example.json failover --reason "regional outage"
 ```
+
+### Deploy infrastructure
+
+```bash
+cd terraform
+cp terraform.tfvars.example terraform.tfvars
+terraform init
+terraform plan
+terraform apply
+```
+
+Required inputs:
+
+- unique S3 bucket names for both regions
+- Route 53 hosted zone ID
+- primary and secondary application endpoints for failover DNS
 
 ![Architecture](./architecture.png)
 
