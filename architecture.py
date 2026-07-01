@@ -2,12 +2,12 @@
 Active-passive across two AWS regions. RPO 5 min / RTO 15 min.
 Run: python architecture.py  (outputs architecture.png)
 """
-from diagrams import Diagram, Cluster, Edge
-from diagrams.aws.network import Route53, Route53HostedZone
-from diagrams.aws.database import Dynamodb
-from diagrams.aws.storage import S3
-from diagrams.aws.security import IAM
+from diagrams import Cluster, Diagram, Edge
 from diagrams.aws.compute import EC2
+from diagrams.aws.database import Dynamodb
+from diagrams.aws.network import Route53, Route53HostedZone
+from diagrams.aws.security import IAM
+from diagrams.aws.storage import S3
 from diagrams.onprem.client import Users
 from diagrams.onprem.iac import Terraform
 

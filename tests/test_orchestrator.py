@@ -46,7 +46,12 @@ class DRManagerTests(unittest.TestCase):
         manager = DRManager.from_file(path)
         result = manager.failover("region outage")
         self.assertEqual(result["traffic_region"], "us-west-2")
-        self.assertEqual(manager.status()["traffic_region"], "us-west-2")
+        status = manager.status()
+        self.assertEqual(status["traffic_region"], "us-west-2")
+        self.assertEqual(
+            {region["name"]: region["role"] for region in status["regions"]},
+            {"us-east-1": "secondary", "us-west-2": "primary"},
+        )
 
     def test_recovery_restores_primary(self) -> None:
         path = ROOT / "config" / "example.json"

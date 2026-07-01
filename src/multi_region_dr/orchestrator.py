@@ -18,7 +18,7 @@ class DRManager:
         self.rto_minutes = int(config["rto_minutes"])
 
     @classmethod
-    def from_file(cls, path: str | Path) -> "DRManager":
+    def from_file(cls, path: str | Path) -> DRManager:
         return cls(json.loads(Path(path).read_text()))
 
     def region(self, name: str) -> RegionState:
@@ -54,6 +54,7 @@ class DRManager:
         primary = self.config["regions"][self.primary_region]
         secondary = self.config["regions"][self.secondary_region]
         primary["healthy"] = False
+        primary["role"] = "secondary"
         secondary["role"] = "primary"
         self.config["traffic_region"] = self.secondary_region
         return {
